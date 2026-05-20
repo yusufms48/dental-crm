@@ -15,7 +15,10 @@ const emptyForm = {
   name: "",
   phone: "",
   birthDate: "",
-  notes: "",
+  allergies: "",
+  chronicDiseases: "",
+  medications: "",
+  bloodType: "",
 };
 
 export default function Patients() {
@@ -45,7 +48,10 @@ export default function Patients() {
       name: patient.name,
       phone: patient.phone,
       birthDate: patient.birthDate,
-      notes: patient.notes,
+      allergies: patient.allergies || "",
+      chronicDiseases: patient.chronicDiseases || "",
+      medications: patient.medications || "",
+      bloodType: patient.bloodType || "",
     });
     setShowModal(true);
   };
@@ -128,9 +134,11 @@ export default function Patients() {
                 </div>
               </div>
               <p className="text-sm text-gray-500">📞 {patient.phone}</p>
-              <p className="text-sm text-gray-500">🎂 {patient.birthDate}</p>
-              {patient.notes && (
-                <p className="text-sm text-gray-400 italic">{patient.notes}</p>
+              <p className="text-sm text-gray-500">
+                🎂 {patient.birthDate.split("-").reverse().join(".")}
+              </p>
+              {patient.allergies && (
+                <p className="text-sm text-red-400">⚠️ {patient.allergies}</p>
               )}
             </div>
           ))}
@@ -200,12 +208,65 @@ export default function Patients() {
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Заметки
+                Группа крови
+              </label>
+              <select
+                value={form.bloodType}
+                onChange={(e) =>
+                  setForm({ ...form, bloodType: e.target.value })
+                }
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="">Не указана</option>
+                <option value="I+">I (O) Rh+</option>
+                <option value="I-">I (O) Rh-</option>
+                <option value="II+">II (A) Rh+</option>
+                <option value="II-">II (A) Rh-</option>
+                <option value="III+">III (B) Rh+</option>
+                <option value="III-">III (B) Rh-</option>
+                <option value="IV+">IV (AB) Rh+</option>
+                <option value="IV-">IV (AB) Rh-</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Аллергии
               </label>
               <textarea
-                value={form.notes}
-                onChange={(e) => setForm({ ...form, notes: e.target.value })}
-                rows={3}
+                value={form.allergies}
+                onChange={(e) =>
+                  setForm({ ...form, allergies: e.target.value })
+                }
+                rows={2}
+                placeholder="Например: аллергия на лидокаин..."
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Хронические заболевания
+              </label>
+              <textarea
+                value={form.chronicDiseases}
+                onChange={(e) =>
+                  setForm({ ...form, chronicDiseases: e.target.value })
+                }
+                rows={2}
+                placeholder="Например: сахарный диабет, гипертония..."
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Принимаемые лекарства
+              </label>
+              <textarea
+                value={form.medications}
+                onChange={(e) =>
+                  setForm({ ...form, medications: e.target.value })
+                }
+                rows={2}
+                placeholder="Например: метформин 500мг..."
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
               />
             </div>
