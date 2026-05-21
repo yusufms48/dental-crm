@@ -1,0 +1,67 @@
+@use "sass:color";
+
+$primary: #2563eb;
+$secondary: #64748b;
+$success: #16a34a;
+$danger: #dc2626;
+$warning: #d97706;
+$radius: 0.75rem;
+
+@mixin card {
+  background: white;
+  border-radius: $radius;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 1.25rem;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card {
+  @include card;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+
+  &--primary {
+    background: color.adjust($primary, $lightness: 40%);
+    color: $primary;
+  }
+
+  &--success {
+    background: color.adjust($success, $lightness: 50%);
+    color: $success;
+  }
+
+  &--danger {
+    background: color.adjust($danger, $lightness: 40%);
+    color: $danger;
+  }
+
+  &--warning {
+    background: color.adjust($warning, $lightness: 40%);
+    color: $warning;
+  }
+}
+
+.sidebar {
+  &__title {
+    color: $primary;
+    font-weight: 700;
+    font-size: 1.25rem;
+  }
+
+  &__subtitle {
+    color: $secondary;
+    font-size: 0.75rem;
+  }
+}
