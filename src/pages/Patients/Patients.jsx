@@ -1,3 +1,4 @@
+import { calcAge, ageLabel } from "../../utils/calcAge";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -136,6 +137,11 @@ export default function Patients() {
               <p className="text-sm text-gray-500">📞 {patient.phone}</p>
               <p className="text-sm text-gray-500">
                 🎂 {patient.birthDate.split("-").reverse().join(".")}
+                {calcAge(patient.birthDate) !== null && (
+                  <span className="ml-1 text-gray-400">
+                    ({ageLabel(calcAge(patient.birthDate))})
+                  </span>
+                )}
               </p>
               {patient.allergies && (
                 <p className="text-sm text-red-400">⚠️ {patient.allergies}</p>

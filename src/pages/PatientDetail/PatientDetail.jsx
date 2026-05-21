@@ -1,3 +1,4 @@
+import { calcAge, ageLabel } from "../../utils/calcAge";
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -114,7 +115,7 @@ export default function PatientDetail() {
         <div className="grid grid-cols-2 gap-6">
           {/* Левая колонка — основная информация */}
           <div className="space-y-1">
-            <p className="text-sm font-semibold text-gray-700 mb-2">
+            <p className="text-sm font-bold text-gray-900 mb-2">
               Основная информация
             </p>
             <p className="text-sm text-gray-500">
@@ -126,7 +127,10 @@ export default function PatientDetail() {
                 <span className="font-medium text-gray-600">
                   Дата рождения:
                 </span>{" "}
-                {patient.birthDate.split("-").reverse().join(".")}
+                {patient.birthDate.split("-").reverse().join(".")}{" "}
+                <span className="text-gray-400">
+                  ({ageLabel(calcAge(patient.birthDate))})
+                </span>
               </p>
             )}
             {patient.bloodType && (
@@ -139,7 +143,7 @@ export default function PatientDetail() {
 
           {/* Правая колонка — анамнез */}
           <div className="space-y-1">
-            <p className="text-sm font-semibold text-gray-700 mb-2">
+            <p className="text-sm font-bold text-gray-900 mb-2">
               Анамнез жизни
             </p>
             {patient.allergies ? (
