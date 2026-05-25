@@ -8,6 +8,7 @@ import {
 } from "../../features/appointments/appointmentsSlice";
 import Modal from "../../components/Modal/Modal";
 import ConfirmModal from "../../components/Modal/ConfirmModal";
+import PatientSearch from "../../components/PatientSearch/PatientSearch";
 
 const statusLabel = {
   upcoming: { text: "Предстоит", color: "bg-blue-100 text-blue-700" },
@@ -34,6 +35,7 @@ export default function Appointments() {
   const [editingAppointment, setEditingAppointment] = useState(null);
   const [form, setForm] = useState(emptyForm);
   const [confirmId, setConfirmId] = useState(null);
+  const [submitted, setSubmitted] = useState(false);
 
   const today = new Date().toISOString().split("T")[0];
 
@@ -67,6 +69,7 @@ export default function Appointments() {
   const openAdd = () => {
     setEditingAppointment(null);
     setForm(emptyForm);
+    setSubmitted(false);
     setShowModal(true);
   };
 
@@ -84,6 +87,8 @@ export default function Appointments() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setSubmitted(true);
+    if (!form.patientId) return;
     if (editingAppointment) {
       dispatch(updateAppointment({ ...editingAppointment, ...form }));
     } else {
@@ -208,21 +213,14 @@ export default function Appointments() {
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Пациент *
               </label>
-              <select
-                required
+              <PatientSearch
+                patients={patients}
                 value={form.patientId}
-                onChange={(e) =>
-                  setForm({ ...form, patientId: e.target.value })
-                }
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                <option value="">Выберите пациента</option>
-                {patients.map((p) => (
-                  <option key={p.id} value={p.id}>
-                    {p.name}
-                  </option>
-                ))}
-              </select>
+                onChange={(id) => setForm({ ...form, patientId: id })}
+              />
+              {!form.patientId && submitted && (
+                <p className="text-xs text-red-400 mt-1">Выберите пациента</p>
+              )}
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
