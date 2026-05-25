@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import { useSelector, useDispatch } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -9,6 +10,7 @@ import {
 import Modal from "../../components/Modal/Modal";
 import ConfirmModal from "../../components/Modal/ConfirmModal";
 import PatientSearch from "../../components/PatientSearch/PatientSearch";
+import { DOCTORS } from "../../utils/doctors";
 
 const statusLabel = {
   upcoming: { text: "Предстоит", color: "bg-blue-100 text-blue-700" },
@@ -22,6 +24,7 @@ const emptyForm = {
   time: "",
   reason: "",
   status: "upcoming",
+  doctorId: "",
 };
 
 export default function Appointments() {
@@ -42,6 +45,11 @@ export default function Appointments() {
   const getPatientName = (patientId) => {
     const patient = patients.find((p) => p.id === patientId);
     return patient ? patient.name : "Неизвестен";
+  };
+
+  const getDoctorName = (doctorId) => {
+    const doctor = DOCTORS.find((d) => d.id === doctorId);
+    return doctor ? doctor.name : null;
   };
 
   const filtered = appointments
@@ -81,6 +89,7 @@ export default function Appointments() {
       time: appointment.time,
       reason: appointment.reason,
       status: appointment.status,
+      doctorId: appointment.doctorId || "",
     });
     setShowModal(true);
   };
@@ -170,6 +179,11 @@ export default function Appointments() {
                 <p className="text-sm text-gray-400">
                   {a.date.split("-").reverse().join(".")} в {a.time}
                 </p>
+                {getDoctorName(a.doctorId) && (
+                  <p className="text-sm text-gray-500">
+                    {getDoctorName(a.doctorId)}
+                  </p>
+                )}
               </div>
               <div className="flex items-center gap-3">
                 <span
@@ -259,6 +273,24 @@ export default function Appointments() {
                 placeholder="Например: осмотр, удаление зуба..."
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Врач *
+              </label>
+              <select
+                required
+                value={form.doctorId}
+                onChange={(e) => setForm({ ...form, doctorId: e.target.value })}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="">Выберите врача</option>
+                {DOCTORS.map((d) => (
+                  <option key={d.id} value={d.id}>
+                    {d.name} — {d.specialty}
+                  </option>
+                ))}
+              </select>
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
