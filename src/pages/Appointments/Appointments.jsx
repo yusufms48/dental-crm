@@ -161,7 +161,7 @@ export default function Appointments() {
                 <p className="font-medium text-gray-800">
                   {getPatientName(a.patientId)}
                 </p>
-                <p className="text-sm text-gray-500">{a.reason}</p>
+                <p className="text-sm font-medium text-blue-400">{a.reason}</p>
                 <p className="text-sm text-gray-400">
                   {a.date.split("-").reverse().join(".")} в {a.time}
                 </p>
