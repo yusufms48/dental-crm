@@ -4,6 +4,7 @@ const links = [
   { to: "/", label: "Главная", icon: "🏠" },
   { to: "/patients", label: "Пациенты", icon: "👤" },
   { to: "/appointments", label: "Записи", icon: "📅" },
+  { to: "/price-list", label: "Прайс-лист", icon: "💰∆" },
 ];
 
 export default function Sidebar() {
