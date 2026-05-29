@@ -7,6 +7,7 @@ import PatientDetail from "./pages/PatientDetail/PatientDetail";
 import Appointments from "./pages/Appointments/Appointments";
 import PriceList from "./pages/PriceList/PriceList";
 import Login from "./pages/Login/Login";
+import NotFound from "./pages/NotFound/NotFound";
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -32,8 +33,8 @@ export default function App() {
         <Route path="patients/:id" element={<PatientDetail />} />
         <Route path="appointments" element={<Appointments />} />
         <Route path="price-list" element={<PriceList />} />
-        <Route path="*" element={<Navigate to="/" />} />
       </Route>
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }
