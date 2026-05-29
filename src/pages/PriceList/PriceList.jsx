@@ -38,7 +38,7 @@ export default function PriceList() {
               key={category.category}
               className="bg-white rounded-xl shadow-sm overflow-hidden"
             >
-              <div className="bg-blue-600 px-5 py-3">
+              <div className="bg-slate-600 px-5 py-3">
                 <h2 className="text-white font-semibold">
                   {category.category}
                 </h2>
@@ -57,7 +57,7 @@ export default function PriceList() {
                         </span>
                       )}
                     </p>
-                    <p className="text-sm font-semibold text-blue-600">
+                    <p className="text-sm font-semibold text-blue-400">
                       {service.price} AZN
                     </p>
                   </div>

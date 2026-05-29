@@ -80,10 +80,13 @@ export default function Patients() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-800">Пациенты</h1>
+        <h1 className="text-2xl font-bold" style={{ color: "#0f172a" }}>
+          Пациенты
+        </h1>
         <button
           onClick={openAdd}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+          className="text-white px-4 py-2 rounded-lg text-sm font-medium transition-opacity hover:opacity-90"
+          style={{ backgroundColor: "#38bdf8" }}
         >
           + Добавить пациента
         </button>
@@ -95,7 +98,8 @@ export default function Patients() {
           placeholder="Поиск по имени..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 bg-white"
+          style={{ "--tw-ring-color": "#38bdf8" }}
         />
       </div>
 
@@ -114,7 +118,8 @@ export default function Patients() {
             >
               <div className="flex items-center justify-between">
                 <h2
-                  className="font-semibold text-gray-800 cursor-pointer hover:text-blue-600"
+                  className="font-semibold text-gray-800 cursor-pointer hover:opacity-70 transition-opacity"
+                  style={{ color: "#0f172a" }}
                   onClick={() => navigate(`/patients/${patient.id}`)}
                 >
                   {patient.name}
@@ -279,7 +284,8 @@ export default function Patients() {
             <div className="flex gap-3 pt-2">
               <button
                 type="submit"
-                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg text-sm font-medium transition-colors"
+                className="flex-1 text-white py-2 rounded-lg text-sm font-medium transition-opacity hover:opacity-90"
+                style={{ backgroundColor: "#38bdf8" }}
               >
                 {editingPatient ? "Сохранить" : "Добавить"}
               </button>

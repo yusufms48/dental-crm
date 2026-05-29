@@ -93,7 +93,8 @@ export default function PatientDetail() {
     <div>
       <button
         onClick={() => navigate("/patients")}
-        className="text-sm text-gray-500 hover:text-blue-600 mb-6 flex items-center gap-1"
+        className="text-sm text-gray-500 mb-6 flex items-center gap-1 hover:opacity-70 transition-opacity"
+        style={{ color: "#64748b" }}
       >
         ← Назад к пациентам
       </button>

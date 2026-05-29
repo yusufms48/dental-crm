@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import { useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -32,7 +32,8 @@ export default function Appointments() {
   const appointments = useSelector((state) => state.appointments.appointments);
   const patients = useSelector((state) => state.patients.patients);
 
-  const [filter, setFilter] = useState("all");
+  const location = useLocation();
+  const [filter, setFilter] = useState(location.state?.filter || "all");
   const [search, setSearch] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [editingAppointment, setEditingAppointment] = useState(null);
@@ -122,10 +123,13 @@ export default function Appointments() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-800">Записи на приём</h1>
+        <h1 className="text-2xl font-bold" style={{ color: "#0f172a" }}>
+          Записи на приём
+        </h1>
         <button
           onClick={openAdd}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+          className="text-white px-4 py-2 rounded-lg text-sm font-medium transition-opacity hover:opacity-90"
+          style={{ backgroundColor: "#38bdf8" }}
         >
           + Добавить запись
         </button>
@@ -139,9 +143,10 @@ export default function Appointments() {
             onClick={() => setFilter(btn.key)}
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
               filter === btn.key
-                ? "bg-blue-600 text-white"
+                ? "text-white"
                 : "bg-white text-gray-600 hover:bg-gray-100"
             }`}
+            style={filter === btn.key ? { backgroundColor: "#38bdf8" } : {}}
           >
             {btn.label}
           </button>
@@ -309,7 +314,8 @@ export default function Appointments() {
             <div className="flex gap-3 pt-2">
               <button
                 type="submit"
-                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg text-sm font-medium transition-colors"
+                className="flex-1 text-white py-2 rounded-lg text-sm font-medium transition-opacity hover:opacity-90"
+                style={{ backgroundColor: "#38bdf8" }}
               >
                 {editingAppointment ? "Сохранить" : "Добавить"}
               </button>
