@@ -1,5 +1,7 @@
 import { calcAge, ageLabel } from "../../utils/calcAge";
 import { useState } from "react";
+import Toast from "../../components/Toast/Toast";
+import { useToast } from "../../hooks/useToast";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
@@ -32,6 +34,7 @@ export default function Patients() {
   const [editingPatient, setEditingPatient] = useState(null);
   const [form, setForm] = useState(emptyForm);
   const [confirmId, setConfirmId] = useState(null);
+  const { toast, showToast } = useToast();
 
   const filtered = patients.filter((p) =>
     p.name.toLowerCase().includes(search.toLowerCase()),
@@ -65,14 +68,17 @@ export default function Patients() {
     dispatch(deletePatient(confirmId));
     dispatch(deletePatientAppointments(confirmId));
     setConfirmId(null);
+    showToast("Пациент удалён", "error");
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (editingPatient) {
       dispatch(updatePatient({ ...editingPatient, ...form }));
+      showToast("Пациент обновлён");
     } else {
       dispatch(addPatient({ id: uuidv4(), ...form }));
+      showToast("Пациент добавлен");
     }
     setShowModal(false);
   };
@@ -300,6 +306,7 @@ export default function Patients() {
           </form>
         </Modal>
       )}
+      {toast && <Toast message={toast.message} type={toast.type} />}
     </div>
   );
 }

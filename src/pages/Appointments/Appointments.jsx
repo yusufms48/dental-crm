@@ -11,6 +11,8 @@ import Modal from "../../components/Modal/Modal";
 import ConfirmModal from "../../components/Modal/ConfirmModal";
 import PatientSearch from "../../components/PatientSearch/PatientSearch";
 import { DOCTORS } from "../../utils/doctors";
+import Toast from "../../components/Toast/Toast";
+import { useToast } from "../../hooks/useToast";
 
 const statusLabel = {
   upcoming: { text: "Предстоит", color: "bg-blue-100 text-blue-700" },
@@ -40,6 +42,7 @@ export default function Appointments() {
   const [form, setForm] = useState(emptyForm);
   const [confirmId, setConfirmId] = useState(null);
   const [submitted, setSubmitted] = useState(false);
+  const { toast, showToast } = useToast();
 
   const today = new Date().toISOString().split("T")[0];
 
@@ -101,8 +104,10 @@ export default function Appointments() {
     if (!form.patientId) return;
     if (editingAppointment) {
       dispatch(updateAppointment({ ...editingAppointment, ...form }));
+      showToast("Запись обновлена");
     } else {
       dispatch(addAppointment({ id: uuidv4(), ...form }));
+      showToast("Запись добавлена");
     }
     setShowModal(false);
   };
@@ -110,6 +115,7 @@ export default function Appointments() {
   const confirmDelete = () => {
     dispatch(deleteAppointment(confirmId));
     setConfirmId(null);
+    showToast("Запись удалена", "error");
   };
 
   const filterButtons = [
@@ -330,6 +336,7 @@ export default function Appointments() {
           </form>
         </Modal>
       )}
+      {toast && <Toast message={toast.message} type={toast.type} />}
     </div>
   );
 }
