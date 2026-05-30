@@ -4,6 +4,7 @@ import {
   Users,
   CalendarDays,
   DollarSign,
+  Wallet,
   LogOut,
 } from "lucide-react";
 
@@ -12,6 +13,7 @@ const links = [
   { to: "/patients", label: "Пациенты", icon: Users },
   { to: "/appointments", label: "Записи", icon: CalendarDays },
   { to: "/price-list", label: "Прайс-лист", icon: DollarSign },
+  { to: "/finance", label: "Финансы", icon: Wallet },
 ];
 
 export default function Sidebar({ onLogout }) {
